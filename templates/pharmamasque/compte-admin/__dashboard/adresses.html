@@ -1,0 +1,51 @@
+{% extends 'pharmamasque/compte-admin/admin.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container pt-3 pb-3 mt-1 ml-1 bg-black" style="overflow: scroll; height: calc(100vh - 58px); border-radius: 10px 0 0 0; border: solid 3px black">
+  <h2 class="pb-2 mb-2 mt-4" style="display: flex; justify-content: space-between;">
+    Les adresses
+  </h2>
+  <div class="row">
+    <div class="col-12 mt-4">
+      <h4 class="pb-2 border-bottom mb-4">Listes des adresses</h4>
+      <div class="card bg-dark pt-2">
+        <div class="table-responsive-xxl">
+          <table class="table table-dark table-hover">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Rue</th>
+                <th scope="col">Alias</th>
+                <th scope="col">Ville</th>
+                <th scope="col">Pays</th>
+                <th scope="col">Tel</th>
+                <th scope="col">Nombre de compagnie</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              {%for e in dataAdresses%}
+              <tr>
+                <th scope="row">{{e.idAdresse}}</th>
+                <td>{{e.rueAdresseComplet}}</td>
+                <td>{%if e.aliasAdresse != None %}{{e.aliasAdresse}}{%endif%}</td>
+                <td>{{e.villeAdresseComplet}}</td>
+                <td>{{e.paysAdresse}}</td>
+                <td>{{e.telAdresse}}</td>
+                <td>{{e.NbCompagnie}}</td>
+              </tr>
+              {%endfor%}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
+{% endblock %}

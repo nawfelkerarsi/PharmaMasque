@@ -1,0 +1,120 @@
+{% extends 'pharmamasque/compte-admin/admin.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container pt-3 pb-3 mt-1 ml-1 bg-black"
+  style="overflow: scroll; height: calc(100vh - 58px); border-radius: 10px 0 0 0; border: solid 3px black">
+  <h2 class="pb-2 mb-2 mt-4" style="display: flex; justify-content: space-between;">
+    Les clients
+  </h2>
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 mt-4">
+      <h4 class="pb-2 border-bottom mb-4" style="display: flex; justify-content: space-between;">
+        Client le plus fidèle
+      </h4>
+      <div class="card bg-dark p-0 flex-row" style="height: 200px !important">
+        <div class="row g-0 w-100 align-items-center">
+          <div class="col-3">
+            <div class="card-img m-3" alt="..." style="height: 96px;
+                        width: 98px;
+                        background-color: black;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center">
+              <h3>{{ dataFidele.0.nomClient.0 }}{{ dataFidele.0.prenomClient.0 }}</h3>
+            </div>
+          </div>
+          <div class="col-9">
+            <div class="card-body">
+              <h5 class="card-title">{{ dataFidele.0 }}</h5>
+              <p class="card-text m-0">{{ dataFidele.0.telClient }}</p>
+              <p class="card-text m-0">{{ dataFidele.0.mailClient }}</p>
+              <p class="card-text m-0 mt-2"><b>Nombre de commandes : {{dataFidele.0.NbCommandes}}</b></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 mt-4">
+      <h4 class="pb-2 border-bottom mb-4" style="display: flex; justify-content: space-between;">
+        Commandes par clients
+      </h4>
+      <div class="bg-black">
+        <div class="card bg-dark" style="height: 200px;">
+          <canvas id="myChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <h4 class="pb-2 border-bottom mb-4 mt-4" style="display: flex; justify-content: space-between;">
+        Liste des clients
+      </h4>
+      <div class="card bg-dark pt-2">
+        <div class="table-responsive-xxl">
+          <table class="table table-dark table-hover">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Prénom</th>
+                <th scope="col">Email</th>
+                <th scope="col">Tél</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              {%for e in dataClient%}
+              <tr>
+                <th scope="row">{{e.idClient}}</th>
+                <td>{{e.nomClient}}</td>
+                <td>{{e.prenomClient}}</td>
+                <td>{{e.mailClient}}</td>
+                <td>{{e.telClient}}</td>
+              </tr>
+              {%endfor%}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
+<script>
+  var ctx = document.getElementById('myChart').getContext('2d');
+  const config = {
+    data: {
+      labels: [{%for k in dataFidele %}"{{ k }}",{% endfor %}],
+  datasets: [{
+    label: 'Nombre de ventes',
+    data: [{%for k in dataFidele %}{{ k.NbCommandes }}, {% endfor %}],
+    backgroundColor: 'rgba(26, 135, 84, 0.2)',
+      borderColor: 'rgba(26, 135, 84, 1)',
+        borderWidth: 2
+      }],
+      
+  },
+  options: {
+    responsive: true,
+      maintainAspectRatio: false,
+
+        scales: {
+      yAxes: [{
+        ticks: {
+          min: 0
+        }
+      }]
+    },
+    borderRadius: 8
+  }
+  };
+  var chart = new Chart.Bar(ctx, config);
+</script>
+{% endblock %}

@@ -1,0 +1,102 @@
+{% extends 'pharmamasque/compte-admin/admin.html' %}
+{% load static %}
+{% load mathfilters %}
+{% block content %}
+<div class="container pt-3 pb-3 mt-1 ml-1 bg-black" style="overflow: scroll; height: calc(100vh - 58px); border-radius: 10px 0 0 0; border: solid 3px black">
+  <h2 class="pb-2 mb-2 mt-4" style="display: flex; justify-content: space-between;">
+    Les commandes
+  </h2>
+
+  <div class="col-12">
+    <div class="card bg-dark text-start mb-4">
+      <div class="row">
+        <div class="offset-2 offset-lg-0 col-10 col-sm-10 col-md-10 col-lg-6 p-3">
+          <div class="m-3">
+            Nombre de produits commandés<h5>{{ nbCommandesTotal }}</h5>
+          </div>
+        </div>
+        <div class="offset-2 offset-lg-0 col-10 col-sm-10 col-md-6 col-lg-6 text-lg-end p-3">
+          <div class="m-3">
+            Total de toutes les commandes<h5>{{ montantTotal }}€</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h4 class="pb-2 border-bottom mb-4">Liste des commandes</h4>
+    {% for e in dataCommande %}
+    <div class="card bg-dark p-0 mt-2 mb-4">
+      <div class="card-header bg-dark">
+        Commande du {{ e.0.dateCommande }}
+      </div>
+      <ul class="list-group list-group-flush bg-dark">
+        {% for commande in e %}
+        {% if not 'Total' in commande %}
+        <li class="list-group-item bg-dark text-white border-secondary">
+          <div class="row g-0">
+            <div class="col-2 col-sm-2 col-md-2 col-lg-1 bg-white d-flex align-items-center rounded">
+              <div class="card-img m-3" alt="..." style="height: 70px;
+                  width: 70px;
+                  {% if commande.nomRefProduit == 'tests antigéniques' %} background-image:url('{% static 'pharmamasque/antigentest.jpg' %}');{% endif %}
+                  {% if commande.nomRefProduit == 'masque chirurgical ffp1' %} background-image:url('{% static 'pharmamasque/masqueadulte.png' %}');{% endif %}
+                  {% if commande.nomRefProduit == 'auto tests' %} background-image:url('{% static 'pharmamasque/autotest.jpg' %}');{% endif %}
+                  {% if commande.nomRefProduit == 'masque chirurgical enfants' %} background-image:url('{% static 'pharmamasque/masqueenfant.png' %}');{% endif %}
+                  {% if commande.nomRefProduit == 'masque chirurgical ffp2' %} background-image:url('{% static 'pharmamasque/masqueffp2.jpg' %}');{% endif %}
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  background-size: cover;">
+              </div>
+            </div>
+            <div class="col-10 col-sm-10 col-md-10 col-lg-3 p-3">
+              <div class="card-body pt-0">
+                <h5 class="card-title">{{ commande.nomRefProduit }}</h5>
+                <p class="card-text m-0">
+                  <b style="font-weight: 600">Référence : </b>
+                  {{ commande.idRefProduit }}-{{ commande.idLotProduit }}
+                </p>
+              </div>
+            </div>
+            <div class="offset-2 offset-lg-0 col-10 col-sm-10 col-md-10 col-lg-4 p-3"
+              style="padding-left: 32px !important;">
+              <p class="card-text">
+                <b style="font-weight: 600">Livré le : </b>
+                {{ commande.dateLivraison }}
+              </p>
+              <p class="card-text">
+                {% if commande.dateRetourLivraison == None %}
+                <b style="font-weight: 600">Mode : </b>
+                {{ commande.modeLivraison }}
+                {% else %}
+                <b style="font-weight: 600">Retourné le : </b>
+                {{ commande.dateRetourLivraison }}
+                {% endif %}
+              </p>
+            </div>
+            <div class="offset-2 offset-lg-0 col-10 col-sm-10 col-md-10 col-lg-4 p-3"
+              style="padding-left: 32px !important;">
+              <h5 class="card-text text-start text-lg-end">
+                <b style="font-weight: 600">{{ commande.prixUnitaireLotProduit }}€</b>
+              </h5>
+              <p class="text-muted text-start text-lg-end" style="color: white!important">Quantité
+                : {{ commande.qteLotProduit }}</p>
+            </div>
+          </div>
+        </li>
+        {% endif %}
+        {% endfor %}
+      </ul>
+    </div>
+
+    {% endfor %}
+
+
+  </div>
+
+</div>
+
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,69 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">
+      <img src="{% static 'pharmamasque/logo.png' %}" alt="Logo" height="60" class="d-inline-block align-text-top">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/masques">Masques</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/autotests">Autotests</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/tests-antigéniques">Tests antigéniques</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Par catégories
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/masques-chirurgicaux-adultes">Masques chirurgicaux adultes</a></li>
+            <li><a class="dropdown-item" href="/masques-chirurgicaux-enfants">Masques chirurgicaux enfants</a></li>
+            <li><a class="dropdown-item" href="/masques-ffp2">Masques FFP2</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="/tests-antigéniques">Tests antigéniques</a></li>
+            <li><a class="dropdown-item" href="/autotests">Autotests</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/produits">Tous les produits</a>
+        </li>
+      </ul>
+      {% if not request.user.is_authenticated %}
+
+        <div class="btn-group me-2" role="group" aria-label="First group">
+          <button type="button" class="btn btn-success">Inscription</button>
+        </div>
+        <div class="btn-group me-2" role="group" aria-label="Second group">
+          <a type="button" class="btn btn-outline-success" href="/accounts/login/">Connexion</a>
+        </div>
+
+      {% else %}
+      {% if request.user.username == 'demo_admin'%}
+      <div class="btn-group me-2" role="group" aria-label="First group">
+        <a type="button" class="btn btn-success" href="/dashboard/">Tableau de bord</a>
+      </div>
+      <div class="btn-group me-2" role="group" aria-label="Second group">
+        <a type="button" class="btn btn-outline-success" href="/accounts/logout/">Déconnexion</a>
+      </div>
+      {%else%}
+      <div class="btn-group me-2" role="group" aria-label="First group">
+        <a type="button" class="btn btn-success" href="/mon-compte/">Mon compte</a>
+      </div>
+      <div class="btn-group me-2" role="group" aria-label="Second group">
+        <a type="button" class="btn btn-outline-success" href="/accounts/logout/">Déconnexion</a>
+      </div>
+      {%endif%}
+      {% endif %}
+    </div>
+  </div>
+</nav>

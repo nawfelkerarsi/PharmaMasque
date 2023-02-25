@@ -1,0 +1,177 @@
+{% extends 'pharmamasque/compte-admin/admin.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container pt-3 pb-3 mt-1 ml-1 bg-black" style="overflow: scroll; height: calc(100vh - 58px); border-radius: 10px 0 0 0; border: solid 3px black">
+  <h2 class="pb-2 mb-2 mt-4" style="display: flex; justify-content: space-between;">
+    Les articles
+  </h2>
+
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6">
+      <h4 class="pb-2 border-bottom mb-3" style="display: flex; justify-content: space-between;">
+        Classement des catégories
+      </h4>
+      <div class="card bg-dark pt-2 mb-3" style="height: 280px;">
+        <table class="table table-dark">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Catégorie</th>
+              <th scope="col">Nombre d'articles</th>
+            </tr>
+          </thead>
+          <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td>{{dataClassementCategories.0.nomRefProduit}}</td>
+                <td>{{dataClassementCategories.0.NbDannonce}}</td>
+              </tr>
+              <tr>
+                <th scope="row">2</th>
+                <td>{{dataClassementCategories.1.nomRefProduit}}</td>
+                <td>{{dataClassementCategories.1.NbDannonce}}</td>
+              </tr>
+              <tr>
+                <th scope="row">3</th>
+                <td>{{dataClassementCategories.2.nomRefProduit}}</td>
+                <td>{{dataClassementCategories.2.NbDannonce}}</td>
+              </tr>
+              <tr>
+                <th scope="row">4</th>
+                <td>{{dataClassementCategories.3.nomRefProduit}}</td>
+                <td>{{dataClassementCategories.3.NbDannonce}}</td>
+              </tr>
+              <tr>
+                <th scope="row">5</th>
+                <td>{{dataClassementCategories.4.nomRefProduit}}</td>
+                <td>{{dataClassementCategories.4.NbDannonce}}</td>
+              </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6">
+      <h4 class="pb-2 border-bottom mb-3" style="display: flex; justify-content: space-between;">
+        Proportion des catégories
+      </h4>
+      <div class="bg-black">
+        <div class="card bg-dark" style="height: 280px;">
+          <canvas class="p-3" id="myChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 mt-4">
+      <h4 class="pb-2 border-bottom mb-4">Articles en fin de stock</h4>
+      <div class="card bg-dark pt-2">
+        <div class="table-responsive-xxl">
+          <table class="table table-dark table-hover">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Titre</th>
+                <th scope="col">Catégorie</th>
+                <th scope="col">Date de publication</th>
+                <th scope="col">Stock</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              {%for e in dataStock%}
+              <tr>
+                <th scope="row">{{e.idRefProduit}}</th>
+                <td>{{e.titreRefProduit}}</td>
+                <td>{{e.nomRefProduit}}</td>
+                <td>{{e.datePublicationRefProduit}}</td>
+                <td>{{e.stockRefProduit}}</td>
+              </tr>
+              {%endfor%}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 mt-4">
+      <h4 class="pb-2 border-bottom mb-4">Liste des articles</h4>
+      <div class="card bg-dark pt-2">
+        <div class="table-responsive-xxl">
+          <table class="table table-dark table-hover">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Titre</th>
+                <th scope="col">Catégorie</th>
+                <th scope="col">Date de publication</th>
+                <th scope="col">Stock</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              {%for e in dataProduits%}
+              <tr>
+                <th scope="row">{{e.idRefProduit}}</th>
+                <td>{{e.titreRefProduit}}</td>
+                <td>{{e.nomRefProduit}}</td>
+                <td>{{e.datePublicationRefProduit}}</td>
+                <td>{{e.stockRefProduit}}</td>
+              </tr>
+              {%endfor%}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
+<script>
+  var ctx = document.getElementById("myChart").getContext("2d");
+  var myChart = new Chart(ctx, {
+      type: "pie",
+      data: {
+          labels: [{%for e in dataClassementCategories%}"{{e.nomRefProduit}}",{% endfor%}],
+          datasets: [{
+              label: '# of Articles',
+              data: [{%for e in dataClassementCategories%}{{e.NbDannonce}},{% endfor%}],
+              backgroundColor: [
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(255, 206, 86, 0.2)',
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(153, 102, 255, 0.2)'
+              ],
+              borderColor: [
+                  'rgba(255,99,132,1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(153, 102, 255, 1)'
+              ],
+              borderWidth: 1
+          }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+          scales: {
+              yAxes: [{
+                  ticks: {
+                      beginAtZero:true
+                  }
+              }]
+          },
+          
+      }
+  });
+  
+</script>
+{% endblock %}

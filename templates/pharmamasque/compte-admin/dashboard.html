@@ -1,0 +1,123 @@
+{% extends 'pharmamasque/compte-admin/admin.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container pt-3 pb-3 mt-1 ml-1 bg-black" style="overflow: scroll; height: calc(100vh - 58px); border-radius: 10px 0 0 0; border: solid 3px black">
+  <h2 class="pb-2 mb-2 mt-4" style="display: flex; justify-content: space-between;">
+    Vue d'ensemble
+  </h2>
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-4">
+      <h4 class="pb-2 border-bottom mb-3 mt-4" style="display: flex; justify-content: space-between;">
+        Chiffre d'affaire
+      </h4>
+      <div class="bg-black">
+        <div class="card bg-dark p-5" style="height: 200px;">
+          <h1>{{ chiffreDAffaire }} €</h1>
+          <h5><a class="text-white text-decoration-none" href="/dashboard/commandes/">En savoir plus →</a></h5>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-4">
+      <h4 class="pb-2 border-bottom mb-3 mt-4" style="display: flex; justify-content: space-between;">
+        Nombre de commandes
+      </h4>
+      <div class="bg-black">
+        <div class="card bg-dark p-5" style="height: 200px;">
+          <h1>{{ nombreCommandes }}</h1>
+          <h5><a class="text-white text-decoration-none" href="/dashboard/commandes/">En savoir plus →</a></h5>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-4">
+      <h4 class="pb-2 border-bottom mb-3 mt-4" style="display: flex; justify-content: space-between;">
+        Nombre de clients
+      </h4>
+      <div class="bg-black">
+        <div class="card bg-dark p-5" style="height: 200px;">
+          <h1>{{ nombreClients }}</h1>
+          <h5><a class="text-white text-decoration-none" href="/dashboard/clients/">En savoir plus →</a></h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6">
+      <h4 class="pb-2 border-bottom mb-3 mt-4" style="display: flex; justify-content: space-between;">
+        Ventes de l'année
+        <a class="btn btn-outline-success" href="/dashboard/rapports/">Voir plus</a>
+      </h4>
+      <div class="bg-black">
+        <div class="card bg-dark" style="height: 280px;">
+          <canvas id="myChart"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6">
+      <h4 class="pb-2 border-bottom mb-3 mt-4" style="display: flex; justify-content: space-between;">
+        Nouveaux clients
+        <a class="btn btn-outline-success" href="/dashboard/clients/">Voir plus</a>
+      </h4>
+      <div class="card bg-dark pt-2" style="height: 280px;">
+        <table class="table table-dark">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Nom</th>
+              <th scope="col">Prénom</th>
+              <th scope="col">Email</th>
+            </tr>
+          </thead>
+          <tbody>
+            {%for e in dataClient%}
+              <tr>
+                <th scope="row">{{e.idClient}}</th>
+                <td>{{e.nomClient}}</td>
+                <td>{{e.prenomClient}}</td>
+                <td>{{e.mailClient}}</td>
+              </tr>
+            {%endfor%}
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
+<script>
+  var ctx = document.getElementById('myChart').getContext('2d');
+  const config = {
+    data: {
+      labels: ['Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Jui', 'Juil', 'Aout', 'Sep', 'Oct', 'Nov', 'Dec'],
+      datasets: [{
+        label: 'Nombre de ventes',
+        data: [{%for k in dataCommande %}{{ k.NombreCommandes }},{% endfor %}],
+        backgroundColor: 'rgba(26, 135, 84, 0.2)',
+        borderColor: 'rgba(26, 135, 84, 1)',
+        borderWidth: 2
+      }],
+      
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+
+    scales: {
+      yAxes: [{
+        ticks: {
+          min: 0
+        }
+      }]
+    },
+    borderRadius: 8
+  }
+  };
+  var chart = new Chart.Line(ctx, config);
+</script>
+{% endblock %}

@@ -1,0 +1,42 @@
+
+<ul class="nav nav-pills flex-column bg-dark p-2" style="height: 100vh">
+    <li style="height: 46px;" class="align-middle p-1">
+        <h4 class="text-success">PharmaMasque</h4>
+    </li>
+    <li class="nav-item pt-1">
+      <a  class="nav-link text-white {% if page == 'dashboard' %}active bg-success{%endif%}" aria-current="page" href="/dashboard/">
+        Tableau de bord
+      </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-white {% if page == 'dashboard__clients' %}active bg-success{%endif%}" href="/dashboard/clients/">
+          Clients
+        </a>
+      </li>
+    <li class="nav-item">
+      <a class="nav-link text-white {% if page == 'dashboard__commandes' %}active bg-success{%endif%}" href="/dashboard/commandes/">
+        Commandes
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-white {% if page == 'dashboard__articles' %}active bg-success{%endif%}" href="/dashboard/articles/">
+        Articles
+      </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-white {% if page == 'dashboard__livraisons' %}active bg-success{%endif%}" href="/dashboard/livraisons/">
+          Livraisons
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-white {% if page == 'dashboard__adresses' %}active bg-success{%endif%}" href="/dashboard/adresses/">
+          Adresses
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-white {% if page == 'dashboard__rapports' %}active bg-success{%endif%}" href="/dashboard/rapports">
+          Rapports
+        </a>
+    </li>
+  </ul>
+ 

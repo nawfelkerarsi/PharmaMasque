@@ -1,0 +1,161 @@
+{% extends 'pharmamasque/base.html' %}
+{% load static %}
+{% block content %}
+    <div class="container mt-5">
+    <div class="alert alert-success mb-5" role="alert">
+        Bienvenue sur le compte démo de Pharma Masque. Veuillez noter que certaines fonctionnalités, comme la
+        modification, ne sont pas autorisées.
+    </div>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-body text-bg-success">
+                Fonctionnalité non autorisée sur ce compte.
+            </div>
+        </div>
+    </div>
+    <div class="toast align-items-center text-bg-primary border-0" role="alert" aria-live="assertive"
+         aria-atomic="true">
+        <div class="d-flex">
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-6 mb-5">
+            <h3 class="pb-2 border-bottom mb-4" style="display: flex; justify-content: space-between;">
+                Mon compte
+                <button type="button" class="btn btn-outline-success" onclick="Alert()">Modifier</button>
+            </h3>
+            <div class="card p-0">
+                <div class="row g-0">
+                    <div class="col-3">
+                        <div class="card-img m-3" alt="..."
+                             style="height: 96px;
+                        width: 98px;
+                  background-color: #e7eaed;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center">
+                            <h3>{{ dataClient.nomClient.0 }}{{ dataClient.prenomClient.0 }}</h3>
+                        </div>
+                    </div>
+                    <div class="col-9">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ dataClient }}</h5>
+                            <p class="card-text m-0"> {{ dataClient.telClient }}</p>
+                            <p class="card-text m-0"> {{ dataClient.mailClient }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-12 col-md-12 col-lg-6 mb-5">
+            <h3 class="pb-2 border-bottom mb-4" style="display: flex; justify-content: space-between;">
+                Dernière commande
+                <a type="button" class="btn btn-outline-success" href="/mon-compte/dernières-commandes/">Voir plus</a>
+            </h3>
+            <div class="card p-0">
+                <div class="row g-0">
+                    <div class="col-3">
+                        <div class="card-img m-3" alt="..."
+                             style="height: 96px;
+                                     width: 98px;
+                                     {% if dataCommande.nomRefProduit == 'tests antigéniques' %} background-image:url('{% static 'pharmamasque/antigentest.jpg' %}');{% endif %}
+                                     {% if dataCommande.nomRefProduit == 'masque chirurgical ffp1' %} background-image:url('{% static 'pharmamasque/masqueadulte.png' %}');{% endif %}
+                                     {% if dataCommande.nomRefProduit == 'auto tests' %} background-image:url('{% static 'pharmamasque/autotest.jpg' %}');{% endif %}
+                                     {% if dataCommande.nomRefProduit == 'masque chirurgical enfants' %} background-image:url('{% static 'pharmamasque/masqueenfant.png' %}');{% endif %}
+                                     {% if dataCommande.nomRefProduit == 'masque chirurgical ffp2' %} background-image:url('{% static 'pharmamasque/masqueffp2.jpg' %}');{% endif %}
+                                     display: flex;
+                                     justify-content: center;
+                                     align-items: center;
+                                     background-size: cover;">
+
+                        </div>
+                    </div>
+                    <div class="col-9">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ dataCommande.nomRefProduit }}</h5>
+                            <p class="card-text m-0"><b style="font-weight: 600">Commandé
+                                le </b>{{ dataCommande.dateCommande }}.</p>
+                            <p class="card-text m-0"><b style="font-weight: 600">Livré
+                                le </b>{{ dataCommande.DateLivraison }}.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h3 class="pb-2 border-bottom mb-4">Mes entreprises</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr)); grid-gap: 10px;">
+                {% for e in dataCompagnie %}
+                    <a href="/ma-compagnie/{{ e.idCompagnie }}/" class="card text-center text-decoration-none text-dark p-3" style="
+                height: 240px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;">
+                        <div class="card-img" alt="..."
+                             style="height: 10rem;
+                  background-color: #e7eaed;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center">
+                            <h3>{{ e.nomCompagnie.0 }}</h3>
+                        </div>
+
+                        <h5 class="card-title">{{ e.nomCompagnie }}</h5>
+
+                    </a>
+                {% endfor %}
+                <div class="card text-center p-3" onclick="Alert()" style="
+                cursor: pointer;
+                height: 240px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;"
+                >
+                    <div class="card-img" alt="..."
+                         style="height: 10rem;
+                  background-color: #e7eaed;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center">
+                        <h3>+</h3>
+                    </div>
+
+                    <h5 class="card-title">Ajouter</h5>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+            integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
+            integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+            integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+            crossorigin="anonymous"></script>
+    <script>
+    function Alert(){
+        const toastLiveExample = document.getElementById('liveToast')
+
+
+                const toast = new bootstrap.Toast(toastLiveExample)
+
+                toast.show()
+
+    }</script>
+{% endblock %}

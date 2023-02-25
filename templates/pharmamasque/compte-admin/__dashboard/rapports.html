@@ -1,0 +1,129 @@
+{% extends 'pharmamasque/compte-admin/admin.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container pt-3 pb-3 mt-1 ml-1 bg-black" style="overflow: scroll; height: calc(100vh - 58px); border-radius: 10px 0 0 0; border: solid 3px black">
+  <h2 class="pb-2 mb-2 mt-4" style="display: flex; justify-content: space-between;">
+    Rapports
+  </h2>
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 mt-4">
+      <h4 class="pb-2 border-bottom mb-4" style="display: flex; justify-content: space-between;">
+        Commandes par catégories
+      </h4>
+      <div class="bg-black">
+        <div class="card bg-dark" style="height: 200px;">
+          <canvas id="myChart1"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 mt-4">
+      <h4 class="pb-2 border-bottom mb-4" style="display: flex; justify-content: space-between;">
+        Ventes moyens de produits
+      </h4>
+      <div class="bg-black">
+        <div class="card bg-dark" style="height: 200px;">
+          <canvas id="myChart2"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 mt-4">
+      <h4 class="pb-2 border-bottom mb-4">Classement par prix de commande</h4>
+      <div class="card bg-dark pt-2">
+        <div class="table-responsive-xxl">
+          <table class="table table-dark table-hover">
+            <thead>
+              <tr>
+                <th scope="col">N°commande</th>
+                <th scope="col">N°compagnie</th>
+                <th scope="col">N°client</th>
+                <th scope="col">N°adresse</th>
+                <th scope="col">Prix total en €</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              {%for e in dataCommande%}
+              <tr>
+                <th scope="row">{{e.idCommande}}</th>
+                <td>{{e.idCompagnie}}</td>
+                <td>{{e.idClient}}</td>
+                <td>{{e.idAdresse}}</td>
+                <td>{{e.prixTotal}}</td>
+              </tr>
+              {%endfor%}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
+<script>
+  var ctx = document.getElementById('myChart1').getContext('2d');
+  const config1 = {
+    data: {
+      labels: [{%for k in dataCategorie %}"{{ k.nomRefProduit }}",{% endfor %}],
+      datasets: [{
+        label: 'Commandes',
+        data: [{%for k in dataCategorie %}{{ k.totalVendu }},{% endfor %}],
+        backgroundColor: 'rgba(26, 135, 84, 0.2)',
+        borderColor: 'rgba(26, 135, 84, 1)',
+        borderWidth: 2
+      }],
+      
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+
+    scales: {
+      yAxes: [{
+        ticks: {
+          min: 0
+        }
+      }]
+    },
+    borderRadius: 8
+  }
+  };
+  var chart = new Chart.Bar(ctx, config1);
+</script>
+<script>
+  var ctx = document.getElementById('myChart2').getContext('2d');
+  const config2 = {
+    data: {
+      labels: ['Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Jui', 'Juil', 'Aout', 'Sep', 'Oct', 'Nov', 'Dec'],
+      datasets: [{
+        label: 'Ventes en moyenne',
+        data: [{%for k in dataProduit %}{{ k.NbMoyenProduitsVendus }},{% endfor %}],
+        backgroundColor: 'rgba(26, 135, 84, 0.2)',
+        borderColor: 'rgba(26, 135, 84, 1)',
+        borderWidth: 2
+      }],
+      
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+
+    scales: {
+      yAxes: [{
+        ticks: {
+          min: 0
+        }
+      }]
+    },
+    borderRadius: 8
+  }
+  };
+  var chart = new Chart.Line(ctx, config2);
+</script>
+{% endblock %}
