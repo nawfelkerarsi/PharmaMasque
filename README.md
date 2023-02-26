@@ -159,5 +159,4 @@ Pour finir, le projet PharmaMasque est un exemple de boutique en ligne qui perme
 
 <br>
 
-<img src="https://raw.githubusercontent.com/nawfelkerarsi/PharmaMasque/main/static/pharmamasque/logoUPS%20dark.png#gh-light-mode-only" width="200"/>
-<img src="https://raw.githubusercontent.com/nawfelkerarsi/PharmaMasque/main/static/pharmamasque/logoUPS%20white.png#gh-dark-mode-only" width="200"/>
+<img src="https://raw.githubusercontent.com/nawfelkerarsi/PharmaMasque/main/static/pharmamasque/logoUPS%20dark.png#gh-light-mode-only" width="200"/><img src="https://raw.githubusercontent.com/nawfelkerarsi/PharmaMasque/main/static/pharmamasque/logoUPS%20white.png#gh-dark-mode-only" width="200"/>
