@@ -157,10 +157,7 @@ En résumé, l'utilisation de Django et Bootstrap a permis une conception rapide
 
 Pour finir, le projet PharmaMasque est un exemple de boutique en ligne qui permet aux clients de rechercher et d'acheter des masques et des tests pour le covid, et aux administrateurs de gérer la boutique en ligne en utilisant une interface intuitive. Le rapport du projet ce trouve en cliquant [ici](https://raw.githubusercontent.com/nawfelkerarsi/PharmaMasque/main/static/pharmamasque/rapport.pdf)
 
-<div style="width: 200px">
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/nawfelkerarsi/PharmaMasque/main/static/pharmamasque/logoUPS%20white.png">
-  <img alt="Text changing depending on mode. UPS Logo" src="https://raw.githubusercontent.com/nawfelkerarsi/PharmaMasque/main/static/pharmamasque/logoUPS%20dark.png">
-</picture>
-</div>
+<br>
 
+<img src="https://raw.githubusercontent.com/nawfelkerarsi/PharmaMasque/main/static/pharmamasque/logoUPS%20dark.png#gh-light-mode-only" width="200"/>
+<img src="https://raw.githubusercontent.com/nawfelkerarsi/PharmaMasque/main/static/pharmamasque/logoUPS%20white.png#gh-dark-mode-only" width="200"/>
